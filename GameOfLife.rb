@@ -1,7 +1,7 @@
 #
 #  Game of Life class
 #
-#  Author(s): Nandigam
+#  Author(s): Nandigam, BLake Lpaum, Cole Sellers
 #
 class GameOfLife
 
@@ -27,8 +27,13 @@ class GameOfLife
 
     #
     # TO DO: setup @grid as array of arrays and fill it with values
-    # from the tokens array
-    #
+		# from the tokens array
+		#
+		@grid = Array new (@rows)
+		for i in 0...@rows
+			@grid[i] = Array new (@cols)
+			@grid[i].fill{|i| tokens.shift.to_i}
+		end
 
   end
 
