@@ -70,6 +70,7 @@ class GameOfLife
 		for i in 0...@rows
 			for j in 0...@cols
 				neighbors = getNeighbors(i, j).to_i
+				#puts neighbors
 				if(@grid[i][j] == 1)
 					if (neighbors < 2)
 						#dying
@@ -81,7 +82,7 @@ class GameOfLife
 						#dying
 						temp[i][j] = 0
 					end
-					puts neighbors
+					#puts neighbors
 				elsif @grid[i][j] == 0
 					if (neighbors == 3)
 						#lives
@@ -118,7 +119,7 @@ class GameOfLife
 
 		#up / right
 		if i > 0 && j >= 0 && i < @rows && j < (@cols-1)
-			if @grid[i][j+1] == 1
+			if @grid[i-1][j+1] == 1
 				neighbors += 1
 			end
 		end
