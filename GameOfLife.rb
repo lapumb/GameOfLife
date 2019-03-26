@@ -29,9 +29,9 @@ class GameOfLife
     # TO DO: setup @grid as array of arrays and fill it with values
 		# from the tokens array
 		#
-		@grid = Array new (@rows)
+		@grid = Array.new (@rows)
 		for i in 0...@rows
-			@grid[i] = Array new (@cols)
+			@grid[i] = Array.new (@cols)
 			@grid[i].fill{|i| tokens.shift.to_i}
 		end
 
@@ -43,7 +43,12 @@ class GameOfLife
 
     #
     # TO DO: append the values in @grid to data
-    #
+		#
+		for i in 0...@rows
+			for j in 0...@cols
+				data += ' ' + @grid[i][j].to_s
+			end
+		end
 
 
 		data += "\n"
@@ -61,8 +66,30 @@ class GameOfLife
 
     #
 		# TO DO: set values in temp grid to next generation
-    #
-
+		#
+		for i in 0...@rows
+			for j in 0...@cols
+				neighbors = getNeighbors(i, j).to_i
+				if(@grid[i][j] == 1)
+					if (neighbors < 2)
+						#dying
+						temp[i][j] = 0
+					elsif (neighbors == 2 || neighbors == 3)
+						#lives
+						temp[i][j] = 1
+					elsif (neighbors > 3)
+						#dying
+						temp[i][j] = 0
+					end
+					puts neighbors
+				elsif @grid[i][j] == 0
+					if (neighbors == 3)
+						#lives
+						temp[i][j] = 1
+					end
+				end
+			end
+		end
 
     # DO NOT DELETE THE CODE BELOW
 		@grid = temp
@@ -74,7 +101,62 @@ class GameOfLife
 
     #
     # TO DO: determine number of neighbors of cell at @grid[i][j]
-    #
+		#
+		#up/left
+		if i > 0 && j > 0 && i < @rows && j < @cols
+			if @grid[i-1][j-1] == 1
+				neighbors += 1
+			end
+		end
+
+		#up
+		if i > 0 && j >= 0 && i <= @rows && j <= @cols
+			if @grid[i-1][j] == 1
+				neighbors += 1
+			end
+		end
+
+		#up / right
+		if i > 0 && j >= 0 && i < @rows && j < (@cols-1)
+			if @grid[i][j+1] == 1
+				neighbors += 1
+			end
+		end
+
+		#left
+		if i >= 0 && j > 0 && i < @rows && j < @cols
+			if @grid[i][j-1] == 1
+				neighbors += 1
+			end
+		end
+
+		#right
+		if i >= 0 && j >= 0 && i < @rows && j < (@cols-1)
+			if @grid[i][j+1] == 1
+				neighbors += 1
+			end
+		end
+
+		#down/left
+		if i >= 0 && j > 0 && i < (@rows-1) && j < @cols
+			if @grid[i+1][j-1] == 1
+				neighbors += 1
+			end
+		end
+
+		#down
+		if i >= 0 && j >= 0 && i < (@rows-1) && j < @cols
+			if @grid[i+1][j] == 1
+				neighbors += 1
+			end
+		end
+
+		#down right
+		if i >= 0 && j >= 0 && i < (@rows-1) && j < (@cols-1)
+			if @grid[i+1][j+1] == 1
+				neighbors += 1
+			end
+		end
 
     # DO NOT DELETE THE CODE BELOW
 		neighbors
